@@ -1,0 +1,9 @@
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\bin\Debug\BubbleBreakeGame.exe.config
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\bin\Debug\BubbleBreakeGame.exe
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\bin\Debug\BubbleBreakeGame.pdb
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\obj\Debug\BubbleBreakeGame.csprojAssemblyReference.cache
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\obj\Debug\BubbleBreakeGame.frmBubbleBreaker.resources
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\obj\Debug\BubbleBreakeGame.Properties.Resources.resources
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\obj\Debug\BubbleBreakeGame.csproj.GenerateResource.cache
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\obj\Debug\BubbleBreakeGame.exe
+C:\Users\Pubudu Sandeepa\Desktop\New folder\C#\BubbleBreakeGame\BubbleBreakeGame\obj\Debug\BubbleBreakeGame.pdb
