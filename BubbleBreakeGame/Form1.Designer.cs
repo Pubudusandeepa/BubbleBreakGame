@@ -56,6 +56,7 @@
             this.Name = "frmBubbleBreaker";
             this.Load += new System.EventHandler(this.frmBubbleBreaker_load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Paint1);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

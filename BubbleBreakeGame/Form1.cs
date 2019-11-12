@@ -39,7 +39,7 @@ namespace BubbleBreakeGame
             score = 0;
             colors = new Colors[NUM_BUBBLES, NUM_BUBBLES];
             isSelected = new bool[NUM_BUBBLES, NUM_BUBBLES];
-            lblInf.BackColor = Color.White;
+            lblInf.BackColor = Color.Black;
 
         }
 
@@ -57,9 +57,9 @@ namespace BubbleBreakeGame
 
         private void Start()
         {
-            for(int row =0; row < NUM_BUBBLES; row++)
+            for (int row = 0; row < NUM_BUBBLES; row++)
             {
-                for(int col=0; col < NUM_BUBBLES; col++)
+                for (int col = 0; col < NUM_BUBBLES; col++)
                 {
                     colors[row, col] = (Colors)rand.Next(1, 6);
                 }
@@ -76,6 +76,9 @@ namespace BubbleBreakeGame
                 for (int col = 0; col < NUM_BUBBLES; col++)
                 {
                     Color bubbleColor = Color.Empty;
+                    var xPos = col;
+                    var yPos = row;
+                    var isBubble = true;
 
                     switch (colors[row, col])
                     {
@@ -91,15 +94,183 @@ namespace BubbleBreakeGame
                         case Colors.Purple:
                             bubbleColor = Color.Purple;
                             break;
+                        case Colors.Blue:
+                            bubbleColor = Color.Blue;
+                            break;
+                        default:
+                            e.Graphics.FillRectangle(Brushes.Black,
+                                xPos * BUBBLE_SIZE,
+                                yPos * BUBBLE_SIZE,
+                                BUBBLE_SIZE, BUBBLE_SIZE);
+                            isBubble = false;
+                            break;
 
                     }
-                    e.Graphics.FillEllipse(new LinearGradientBrush(
-                        new Point(row * BUBBLE_SIZE, col * BUBBLE_SIZE),
-                        new Point(row * BUBBLE_SIZE + BUBBLE_SIZE, col * BUBBLE_SIZE + BUBBLE_SIZE),
-                        Color.White, bubbleColor), row * BUBBLE_SIZE, col * BUBBLE_SIZE, BUBBLE_SIZE, BUBBLE_SIZE);
+                    if (isBubble)
+                    {
+                        e.Graphics.FillEllipse(new LinearGradientBrush(
+                     new Point(row * BUBBLE_SIZE + 5, col * BUBBLE_SIZE),
+                     new Point(row * BUBBLE_SIZE + BUBBLE_SIZE + 15, col * BUBBLE_SIZE + BUBBLE_SIZE + 15),
+                     Color.White, bubbleColor),
+                     yPos * BUBBLE_SIZE,
+                     xPos * BUBBLE_SIZE,
+                     BUBBLE_SIZE, BUBBLE_SIZE);
+                    }
+
+                 
 
                 }
             }
         }
+
+        private void Form_MouseDown(object sender, MouseEventArgs e)
+        {
+            var x = Convert.ToInt32(e.X / BUBBLE_SIZE);
+            var y = Convert.ToInt32(e.Y / BUBBLE_SIZE);
+            var row = y;
+            var col = x;
+
+            if (isSelected[row, col] && numOfSelectedBubbles > 1)
+            {
+                score += Convert.ToInt32(lblInf.Text);
+                this.Text = score + "point";
+                RemoveBubbles();
+                ClearSelected();
+                MoveBubblesDown();
+                //  MoveBubblesRight();
+
+                if (!HasMoreMoves())
+                {
+                    MessageBox.Show("Game Over");
+                }
+
+
+            }
+            else
+            {
+                ClearSelected();
+
+                if (colors[row, col] > Colors.None)
+                {
+                    HighlightNeighbors(row, col);
+
+                    if (numOfSelectedBubbles > 1)
+                    {
+                        SetLable(numOfSelectedBubbles, x, y);
+                    }
+                }
+            }
+
+        }
+
+        private void RemoveBubbles()
+        {
+            for (int row = 0; row < NUM_BUBBLES; row++)
+            {
+                for (int col = 0; col < NUM_BUBBLES; col++)
+                {
+                    if (isSelected[row, col])
+                        colors[row, col] = Colors.None;
+                }
+            }
+            this.Invalidate();
+            Application.DoEvents();
+        }
+
+        private void ClearSelected()
+        {
+            for (int row = 0; row < NUM_BUBBLES; row++)
+            {
+                for (int col = 0; col < NUM_BUBBLES; col++)
+                {
+                    isSelected[row, col] = false;
+
+                }
+            }
+            numOfSelectedBubbles = 0;
+            lblInf.Visible = false;
+        }
+
+        private bool HasMoreMoves()
+        {
+            for (int row = 0; row < NUM_BUBBLES; row++)
+            {
+                for (int col = 0; col < NUM_BUBBLES; col++)
+                {
+                    if (colors[row, col] > Colors.None)
+                    {
+                        if (col < NUM_BUBBLES - 1 && colors[row, col] == colors[row, col + 1])
+                            return true;
+                        if (row < NUM_BUBBLES - 1 && colors[row, col] == colors[row + 1, col])
+                            return true;
+                    }
+
+                }
+
+
+            }
+            return false;
+        }
+
+        private void SetLable(int numOfBubles, int x, int y)
+        {
+            var value = numOfBubles * (numOfBubles - 1);
+            lblInf.Text = value.ToString();
+
+            lblInf.Left = x * BUBBLE_SIZE + BUBBLE_SIZE;
+            lblInf.Top = y * BUBBLE_SIZE + BUBBLE_SIZE;
+
+            if (lblInf.Left > this.ClientSize.Width / 2)
+                lblInf.Left -= BUBBLE_SIZE;
+
+            if (lblInf.Top > this.ClientSize.Height / 2)
+                lblInf.Top = BUBBLE_SIZE;
+                lblInf.Visible = true;
+
+
+        }
+
+       
+    
+
+
+
+    private void HighlightNeighbors(int row, int col)
+        {
+            isSelected[row, col] = true;
+            numOfSelectedBubbles++;
+
+            //move up
+            if (row > 0 && colors[row, col] == colors[row - 1, col] && !isSelected[row - 1, col])
+            {
+                HighlightNeighbors(row - 1, col);
+            }
+            //move down
+            if (row < NUM_BUBBLES - 1 && colors[row, col] == colors[row + 1, col] && !isSelected[row + 1, col])
+            {
+                HighlightNeighbors(row + 1, col);
+            }
+            // Move left
+            if (col > 0 && colors[row, col] == colors[row, col - 1] && !isSelected[row, col - 1])
+            {
+                HighlightNeighbors(row, col - 1);
+            }
+            //move right
+            if (col < NUM_BUBBLES - 1 && colors[row, col] == colors[row, col + 1] && !isSelected[row, col + 1])
+            {
+                HighlightNeighbors(row, col + 1);
+            }
+
+
+
+
+        }
+
     }
+
 }
+
+
+
+
+
