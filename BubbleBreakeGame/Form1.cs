@@ -137,7 +137,7 @@ namespace BubbleBreakeGame
                 RemoveBubbles();
                 ClearSelected();
                 MoveBubblesDown();
-                //  MoveBubblesRight();
+                 MoveBubblesRight();
 
                 if (!HasMoreMoves())
                 {
@@ -230,12 +230,77 @@ namespace BubbleBreakeGame
 
         }
 
-       
-    
+        private void MoveBubblesDown()
+        {
+            for (int col = 0; col < NUM_BUBBLES; col++)
+            {
+                var noneColorBubblePosition = NUM_BUBBLES - 1;
+                var foundNoneColor = false;
+
+                for (int row = NUM_BUBBLES - 1; row >= 0; row--)
+                {
+                    if (colors[row, col] == Colors.None)
+                        foundNoneColor = true;
+
+                    if (colors[row, col] != Colors.None && !foundNoneColor)
+                        noneColorBubblePosition--;
+
+                    if (colors[row, col] != Colors.None && foundNoneColor)
+                    {
+                        colors[noneColorBubblePosition, col] = colors[row, col];
+                        noneColorBubblePosition--;
+                    }
+
+                }
+
+                for (int r = noneColorBubblePosition; r >= 0; r--)
+                {
+                    colors[r, col] = Colors.None;
+                }
 
 
+            }
+            this.Invalidate();
+            Application.DoEvents();
+        }
 
-    private void HighlightNeighbors(int row, int col)
+
+        private void MoveBubblesRight()
+        {
+            for (int row = 0; row < NUM_BUBBLES; row++)
+            {
+                var noneColorBubblePosition = NUM_BUBBLES - 1;
+                var foundNoneColor = false;
+
+                for (int col = NUM_BUBBLES - 1; col >= 0; col--)
+                {
+                    if (colors[row, col] == Colors.None)
+                        foundNoneColor = true;
+
+                    if (colors[row, col] != Colors.None && !foundNoneColor)
+                        noneColorBubblePosition--;
+
+                    if (colors[row, col] != Colors.None && foundNoneColor)
+                    {
+                        colors[row, noneColorBubblePosition] = colors[row, col];
+                        noneColorBubblePosition--;
+                    }
+
+                }
+
+                for (int c = noneColorBubblePosition; c >= 0; c--)
+                {
+                    colors[row, c] = Colors.None;
+                }
+
+
+            }
+            this.Invalidate();
+            Application.DoEvents();
+        }
+
+
+        private void HighlightNeighbors(int row, int col)
         {
             isSelected[row, col] = true;
             numOfSelectedBubbles++;
