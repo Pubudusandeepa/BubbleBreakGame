@@ -49,6 +49,7 @@ namespace BubbleBreakeGame
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             BackColor = Color.Black;
+            DoubleBuffered = true;
             Start();
         }
 
@@ -297,6 +298,21 @@ namespace BubbleBreakeGame
             }
             this.Invalidate();
             Application.DoEvents();
+            GenerateBubbles();
+        }
+
+        private void GenerateBubbles()
+        {
+            if (colors[NUM_BUBBLES - 1, 0] == Colors.None)
+            {
+                for(int row = NUM_BUBBLES-1; row >=0; row--)
+                {
+                    colors[row, 0] = (Colors)rand.Next(1, 6);
+                }
+                this.Invalidate();
+                Application.DoEvents();
+                MoveBubblesRight();
+            }
         }
 
 
