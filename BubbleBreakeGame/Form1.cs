@@ -116,6 +116,37 @@ namespace BubbleBreakeGame
                      yPos * BUBBLE_SIZE,
                      xPos * BUBBLE_SIZE,
                      BUBBLE_SIZE, BUBBLE_SIZE);
+
+                        if (isSelected[row, col])
+                        {
+                            //Left outLine
+                            if (col > 0 && colors[row, col] != colors[row, col - 1])
+                                e.Graphics.DrawLine(Pens.White, xPos * BUBBLE_SIZE, yPos * BUBBLE_SIZE,
+                                    xPos * BUBBLE_SIZE, yPos * BUBBLE_SIZE + BUBBLE_SIZE);
+                            //right outline
+                            if (col < NUM_BUBBLES-1  && colors[row, col] != colors[row, col + 1])
+                                e.Graphics.DrawLine(Pens.White, xPos * BUBBLE_SIZE + BUBBLE_SIZE, yPos * BUBBLE_SIZE,
+                                    xPos * BUBBLE_SIZE + BUBBLE_SIZE, yPos * BUBBLE_SIZE + BUBBLE_SIZE);
+                            //top outline
+                            if(row > 0 && colors[row,col] != colors[row - 1, col])
+                            
+                                e.Graphics.DrawLine(Pens.White, xPos * BUBBLE_SIZE , yPos * BUBBLE_SIZE,
+                                    xPos * BUBBLE_SIZE + BUBBLE_SIZE, yPos * BUBBLE_SIZE);
+
+
+                            
+
+                            //Bottom outline
+                            if (row < NUM_BUBBLES-1 && colors[row, col] != colors[row + 1, col])
+                            
+                                e.Graphics.DrawLine(Pens.White, xPos * BUBBLE_SIZE, yPos * BUBBLE_SIZE + BUBBLE_SIZE,
+                                    xPos * BUBBLE_SIZE + BUBBLE_SIZE, yPos * BUBBLE_SIZE + BUBBLE_SIZE);
+
+
+                            
+
+
+                        }
                     }
 
                  
@@ -309,10 +340,12 @@ namespace BubbleBreakeGame
                 {
                     colors[row, 0] = (Colors)rand.Next(1, 6);
                 }
-                this.Invalidate();
-                Application.DoEvents();
-                MoveBubblesRight();
+                
             }
+
+            this.Invalidate();
+            Application.DoEvents();
+            MoveBubblesRight();
         }
 
 
