@@ -188,7 +188,7 @@ namespace BubbleBreakeGame
 
                     if (numOfSelectedBubbles > 1)
                     {
-                        SetLable(numOfSelectedBubbles, x, y);
+                        SetLabel(numOfSelectedBubbles, x, y);
                     }
                 }
             }
@@ -244,7 +244,7 @@ namespace BubbleBreakeGame
             return false;
         }
 
-        private void SetLable(int numOfBubles, int x, int y)
+        private void SetLabel(int numOfBubles, int x, int y)
         {
             var value = numOfBubles * (numOfBubles - 1);
             lblInf.Text = value.ToString();

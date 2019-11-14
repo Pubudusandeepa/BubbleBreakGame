@@ -50,7 +50,7 @@
             // 
             // frmBubbleBreaker
             // 
-            this.ClientSize = new System.Drawing.Size(773, 409);
+            this.ClientSize = new System.Drawing.Size(435, 409);
             this.Controls.Add(this.lblInf);
             this.Controls.Add(this.label2);
             this.Name = "frmBubbleBreaker";
